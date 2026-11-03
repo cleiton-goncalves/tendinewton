@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Setlist de Covers</title>
+<style>
+  :root{
+    --bg:#eceef3; --ink:#0e0f13; --muted:#7a8190; --line:#eef0f3;
+    --accent:#ff3d57; --soft:#fff1f3;
+    --yt:#ff0033; --sp:#1db954; --am:#fa243c;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+
+  /* ---------- cartão principal ---------- */
+  .shell{width:min(1240px,calc(100% - 32px));margin:24px auto;padding:12px;background:#fff;border-radius:28px;
+    box-shadow:0 30px 80px -30px rgba(20,24,40,.28);display:grid;grid-template-columns:340px minmax(0,1fr);gap:8px}
+
+  /* ---------- lateral com gradiente ---------- */
+  .art{position:sticky;top:24px;align-self:start;height:calc(100vh - 72px);min-height:520px;max-height:760px;
+    border-radius:20px;overflow:hidden;background:#12081f;color:#fff;isolation:isolate}
+  .art::before{content:"";position:absolute;inset:-25%;z-index:-2;
+    background:conic-gradient(from 210deg at 52% 48%,#ff3d81,#7b2ff7,#1e6bff,#00d9c0,#ffb23c,#ff3d81);
+    filter:blur(55px) saturate(1.4);animation:spin 28s linear infinite}
+  .art::after{content:"";position:absolute;inset:0;z-index:-1;
+    background:radial-gradient(120% 70% at 50% 112%,rgba(8,4,18,.88),transparent 62%),
+               radial-gradient(60% 40% at 28% 18%,rgba(255,255,255,.18),transparent 70%)}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @media (prefers-reduced-motion:reduce){.art::before{animation:none}}
+  .art-in{height:100%;display:flex;flex-direction:column;justify-content:space-between;padding:22px}
+  .stamp{align-self:flex-start;background:#000;color:#fff;font-weight:800;letter-spacing:.14em;font-size:.78rem;
+    padding:14px 16px 22px;clip-path:polygon(0 0,100% 0,100% 80%,32% 80%,0 100%)}
+  .art small{font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;opacity:.85}
+  .art h1{margin:8px 0 6px;font-size:clamp(2rem,3.4vw,2.8rem);line-height:1;letter-spacing:-.03em;font-weight:800;word-break:break-word}
+  .art .count{margin:0 0 18px;opacity:.85;font-size:.9rem}
+  .art .pl{display:flex;flex-direction:column;gap:8px}
+  .art .pl a{display:flex;justify-content:space-between;align-items:center;padding:11px 14px;border-radius:12px;
+    background:rgba(255,255,255,.14);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+    border:1px solid rgba(255,255,255,.2);color:#fff;text-decoration:none;font-weight:600;font-size:.9rem;transition:background .15s}
+  .art .pl a:hover{background:rgba(255,255,255,.27)}
+
+  /* ---------- coluna principal ---------- */
+  .main{padding:26px 26px 14px;min-width:0;display:flex;flex-direction:column}
+  .eyebrow{font-size:.68rem;letter-spacing:.16em;font-weight:700;text-transform:uppercase;color:var(--muted);display:flex;gap:10px;align-items:center}
+  .eyebrow i{width:7px;height:7px;border-radius:50%;background:var(--accent);display:inline-block}
+
+  .feat-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(260px,330px);gap:28px;align-items:start;margin-top:12px}
+  .feat-text h2{margin:0;font-size:clamp(1.8rem,3.2vw,2.6rem);letter-spacing:-.03em;line-height:1.05;font-weight:800}
+  .who{color:var(--muted);margin:10px 0 20px;display:flex;align-items:center;flex-wrap:wrap;gap:8px}
+  .tag{background:var(--ink);color:#fff;border-radius:999px;font-size:.7rem;font-weight:700;padding:3px 10px;letter-spacing:.04em}
+  .pills{display:flex;flex-wrap:wrap;gap:8px}
+  .pill{display:inline-flex;align-items:center;gap:8px;border:1px solid #e3e6ec;border-radius:999px;padding:7px 13px;
+    font-size:.82rem;font-weight:600;color:var(--ink);text-decoration:none;background:#fff;transition:.15s}
+  .pill:hover{border-color:var(--ink);transform:translateY(-1px)}
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--c);display:inline-block}
+  .tlinks{display:flex;flex-wrap:wrap;gap:18px;margin-top:18px;font-size:.86rem}
+  .tlinks a{color:var(--ink);font-weight:600;text-decoration:none;border-bottom:2px solid var(--accent);padding-bottom:1px}
+  .tlinks a:hover{color:var(--accent)}
+
+  .media{border-radius:16px;overflow:hidden;background:#0e0f13}
+  .tabs{display:flex;gap:4px;padding:6px;background:#17181d}
+  .tabs button{flex:1;border:0;background:transparent;color:#aab0bd;font-family:inherit;font-weight:600;font-size:.78rem;
+    padding:7px;border-radius:10px;cursor:pointer}
+  .tabs button.on{background:#2a2c34;color:#fff}
+  .screen{aspect-ratio:16/9;position:relative;background:#000}
+  .screen.sp{aspect-ratio:auto;height:152px;background:#0e0f13}
+  .screen iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  .thumb{position:absolute;inset:0;width:100%;height:100%;border:0;cursor:pointer;background-size:cover;background-position:center;background-color:#111}
+  .thumb::after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 40%,rgba(0,0,0,.5))}
+  .pbtn{position:absolute;z-index:1;left:50%;top:50%;transform:translate(-50%,-50%);width:56px;height:56px;border-radius:50%;
+    background:rgba(255,255,255,.93);display:grid;place-items:center;box-shadow:0 8px 24px rgba(0,0,0,.35);transition:transform .15s}
+  .thumb:hover .pbtn{transform:translate(-50%,-50%) scale(1.07)}
+  .pbtn svg{width:22px;margin-left:3px;color:#000}
+  .noembed{padding:26px 16px;color:#aab0bd;font-size:.85rem;text-align:center}
+
+  .listhead{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:36px 0 8px;flex-wrap:wrap}
+  .listhead h3{margin:0;font-size:1.05rem;letter-spacing:-.01em}
+  .search{border:1px solid #e3e6ec;border-radius:999px;padding:9px 16px;font:inherit;font-size:.9rem;min-width:220px;background:#f7f8fa;outline:none}
+  .search:focus{border-color:var(--ink);background:#fff}
+
+  ol.list{list-style:none;margin:0;padding:0}
+  .row{display:grid;grid-template-columns:44px minmax(0,1fr) auto;align-items:center;gap:12px;padding:12px 14px;
+    border-radius:16px;cursor:pointer;border-top:1px solid var(--line);transition:background .15s,box-shadow .15s}
+  .row:first-child{border-top-color:transparent}
+  .row:hover{background:#f7f8fa}
+  .row.on{background:var(--soft);box-shadow:0 12px 30px -20px rgba(255,61,87,.7);border-top-color:transparent}
+  .row.on + .row{border-top-color:transparent}
+  .idx{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:.85rem;color:var(--muted);background:#f1f3f6}
+  .row.on .idx{background:var(--accent);color:#fff}
+  .row .t{font-weight:700;letter-spacing:-.01em}
+  .row .a{color:var(--muted);font-size:.85rem;margin-top:2px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  .row .tag{font-size:.65rem;padding:2px 8px}
+  .acts{display:flex;gap:6px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+  .acts .tl{font-size:.8rem;font-weight:600;color:var(--muted);text-decoration:none;padding:5px 8px;border-radius:8px}
+  .acts .tl:hover{color:var(--ink);background:#eceef3}
+  .empty{padding:30px;text-align:center;color:var(--muted)}
+
+  /* ---------- barra de player ---------- */
+  .bar{position:sticky;bottom:14px;margin-top:22px;background:#0e0f13;color:#fff;border-radius:18px;
+    display:flex;align-items:center;gap:14px;padding:10px 14px;box-shadow:0 20px 40px -18px rgba(0,0,0,.6);z-index:5}
+  .bar .mini{width:40px;height:40px;border-radius:10px;flex:none;
+    background:conic-gradient(from 200deg,#ff3d81,#7b2ff7,#1e6bff,#00d9c0,#ffb23c,#ff3d81)}
+  .bar .now{min-width:0;flex:1}
+  .bar .now b{display:block;font-size:.88rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .bar .now span{font-size:.75rem;color:#aab0bd}
+  .ctrl{display:flex;align-items:center;gap:6px}
+  .ctrl button{border:0;background:transparent;color:#fff;width:36px;height:36px;border-radius:50%;cursor:pointer;display:grid;place-items:center}
+  .ctrl button:hover{background:#23252c}
+  .ctrl svg{width:18px}
+  .ctrl .go{background:#fff;color:#000;width:40px;height:40px}
+  .ctrl .go:hover{background:#e6e6e6}
+  .note{color:var(--muted);font-size:.78rem;text-align:center;margin:26px 0 4px}
+
+  /* ---------- responsivo ---------- */
+  @media (max-width:1000px){ .feat-grid{grid-template-columns:1fr} }
+  @media (max-width:860px){
+    .shell{grid-template-columns:1fr;padding:10px;width:calc(100% - 20px);margin:10px auto}
+    .art{position:relative;top:0;height:auto;min-height:0}
+    .art-in{gap:36px}
+    .art .pl{flex-direction:row;flex-wrap:wrap}
+    .art .pl a{flex:1 1 auto;padding:9px 12px;font-size:.8rem;gap:8px}
+    .main{padding:22px 8px 8px}
+    .row{grid-template-columns:40px minmax(0,1fr)}
+    .acts{grid-column:1 / -1;justify-content:flex-start}
+    .search{width:100%}
+  }
+
+  @media print{
+    body{background:#fff} .shell{box-shadow:none;display:block}
+    .art,.bar,.media,.acts,.search,.pills,.tlinks,.note{display:none!important}
+    .row{break-inside:avoid;grid-template-columns:36px 1fr}
+    .feat-grid{display:block}
+  }
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <aside class="art">
+    <div class="art-in">
+      <div class="stamp">SETLIST</div>
+      <div>
+        <small>Repertório 2027</small>
+        <h1 id="band"></h1>
+        <p class="count" id="count"></p>
+        <div class="pl" id="playlists"></div>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <section id="featured"></section>
+
+    <div class="listhead">
+      <h3>Repertório</h3>
+      <input id="q" class="search" type="search" placeholder="Buscar música ou banda…" aria-label="Buscar">
+    </div>
+    <ol class="list" id="list"></ol>
+
+    <p class="note">Letras: Letras.mus.br · Cifras: Cifra Club · Aulas: YouTube.</p>
+
+    <div class="bar" id="bar"></div>
+  </main>
+
+</div>
+
+<script>
+
+const BAND = "Tendi Newton";          
+
+const PLAYLISTS = {
+  yt: "https://www.youtube.com/watch?v=K0siYUjV9UM&list=PLKzGf0ViNZck",
+  sp: "https://open.spotify.com/playlist/50W3Sdl9X8gzVJBTKx9h4j",
+  am: "https://music.apple.com/br/playlist/tendi-newton/pl.u-EdAVz4dFD4Prevg",
+};
+
+/* Campos opcionais por música:
+   key, note, youtube, youtubeId, spotify, spotifyId, apple, lyrics, chords, lesson
+   Sem preencher, letra/cifra/videoaula fazem uma busca automática. */
+const SONGS = [
+  { title: "Mama, I'm Coming Home", artist: "Ozzy Osbourne", key: "F",
+    youtubeId: "K0siYUjV9UM", youtube: "https://www.youtube.com/watch?v=K0siYUjV9UM",
+    spotifyId: "0S3gpZzlT9Hb7CCSV2owX7", spotify: "https://open.spotify.com/track/0S3gpZzlT9Hb7CCSV2owX7",
+    apple: "https://music.apple.com/br/song/mama-im-coming-home/209695192",
+    lyrics: "https://www.letras.mus.br/ozzy-osbourne/mama-im-coming-home/",
+    chords: "https://www.cifraclub.com.br/ozzy-osbourne/mama-im-coming-home/",
+    lesson: "https://www.youtube.com/watch?v=za6qmYJdxtY" },
+  { title: "This Love",             artist: "Maroon 5",
+    youtubeId: "XPpTgCho5ZA", youtube: "https://www.youtube.com/watch?v=XPpTgCho5ZA",
+    spotifyId: "6ECp64rv50XVz93WvxXMGF", spotify: "https://open.spotify.com/track/6ECp64rv50XVz93WvxXMGF",
+    apple: "https://music.apple.com/br/song/this-love/1440851719",
+    lyrics: "https://www.letras.mus.br/maroon-5/77721/",
+    chords: "https://www.cifraclub.com.br/maroon-5/this-love/",
+    lesson: "https://www.youtube.com/watch?v=QdJsVxZVnWw" },
+  { title: "O Nome Dessa Rua",      artist: "Acústicos & Valvulados",
+    youtubeId: "tkhccMRNB-s", youtube: "https://www.youtube.com/watch?v=tkhccMRNB-s",
+    spotifyId: "1mX7jORbAUgspCv3KcLa6K", spotify: "https://open.spotify.com/track/1mX7jORbAUgspCv3KcLa6K",
+    apple: "https://music.apple.com/br/song/o-nome-dessa-rua/940280457",
+    lyrics: "https://www.letras.mus.br/acusticos-e-valvulados/o-nome-dessa-rua/",
+    chords: "https://www.cifraclub.com.br/acusticos-e-valvulados/o-nome-dessa-rua/" },
+    // lesson: (nenhuma videoaula encontrada; cole o link aqui quando tiver)
+  { title: "História de Verão",     artist: "Forfun",
+    youtubeId: "Ds5ExYEpANk", youtube: "https://www.youtube.com/watch?v=Ds5ExYEpANk",
+    spotifyId: "6F1kCUTjvdALqB6p5VkqwR", spotify: "https://open.spotify.com/track/6F1kCUTjvdALqB6p5VkqwR",
+    apple: "https://music.apple.com/br/song/hist%C3%B3ria-de-ver%C3%A3o/1552509046",
+    lyrics: "https://www.letras.mus.br/forfun/historia-de-verao/",
+    chords: "https://www.cifraclub.com.br/forfun/historia-de-verao/",
+    lesson: "https://www.youtube.com/watch?v=j8iIBwa0-Mg" },
+  { title: "Know Your Enemy",       artist: "Green Day",
+    youtubeId: "9IclmVdWNbI", youtube: "https://www.youtube.com/watch?v=9IclmVdWNbI",
+    spotifyId: "5qtwzv99vOr5UTwnTixn7j", spotify: "https://open.spotify.com/track/5qtwzv99vOr5UTwnTixn7j",
+    apple: "https://music.apple.com/br/song/know-your-enemy/315611301",
+    lyrics: "https://www.letras.mus.br/green-day/know-your-enemy/",
+    chords: "https://www.cifraclub.com.br/green-day/know-your-enemy/",
+    lesson: "https://www.youtube.com/watch?v=bxgwM0M6viA" },
+  { title: "Somebody Told Me",      artist: "The Killers",
+    youtubeId: "Y5fBdpreJiU", youtube: "https://www.youtube.com/watch?v=Y5fBdpreJiU",
+    spotifyId: "6PwjJ58I4t7Mae9xfZ9l9v", spotify: "https://open.spotify.com/track/6PwjJ58I4t7Mae9xfZ9l9v",
+    apple: "https://music.apple.com/br/song/somebody-told-me/1526194195",
+    lyrics: "https://www.letras.mus.br/the-killers/somebody-told-me/",
+    chords: "https://www.cifraclub.com.br/the-killers/somebody-told-me/",
+    lesson: "https://www.youtube.com/watch?v=UakQY7f9z3Q" },
+  { title: "Times Like These",      artist: "Foo Fighters",
+    youtubeId: "rhzmNRtIp8k", youtube: "https://www.youtube.com/watch?v=rhzmNRtIp8k",
+    spotifyId: "67vYdAAM3oGsEImCRfbtsF", spotify: "https://open.spotify.com/track/67vYdAAM3oGsEImCRfbtsF",
+    apple: "https://music.apple.com/br/song/times-like-these/334812020",
+    lyrics: "https://www.letras.mus.br/foo-fighters/times-like-these/",
+    chords: "https://www.cifraclub.com.br/foo-fighters/times-like-these/",
+    lesson: "https://www.youtube.com/watch?v=RARh2hK4QPs" },
+  { title: "Tarde de Outubro",      artist: "CPM 22",
+    youtubeId: "YsnMBgJjHZ4", youtube: "https://www.youtube.com/watch?v=YsnMBgJjHZ4",
+    spotifyId: "1d9FVl17Uq9LWHAFyrmIgO", spotify: "https://open.spotify.com/track/1d9FVl17Uq9LWHAFyrmIgO",
+    apple: "https://music.apple.com/br/song/tarde-de-outubro/1442552212",
+    lyrics: "https://www.letras.mus.br/cpm-22/tarde-de-outubro/",
+    chords: "https://www.cifraclub.com.br/cpm-22/tarde-de-outubro/",
+    lesson: "https://www.youtube.com/watch?v=00cxMvKMeW4" },
+];
+
+/* ============================================================
+   CÓDIGO
+   ============================================================ */
+const $ = s => document.querySelector(s);
+const enc = encodeURIComponent;
+const esc = t => String(t).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+const ICON = {
+  play: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>',
+  prev: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zM9.5 12 18 18V6z"/></svg>',
+  next: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 6h2v12h-2zM6 18l8.5-6L6 6z"/></svg>',
+};
+
+const links = s => {
+  const q = `${s.title} ${s.artist}`;
+  return {
+    yt:  s.youtube || `https://www.youtube.com/results?search_query=${enc(q + " official")}`,
+    sp:  s.spotify || `https://open.spotify.com/search/${enc(q)}`,
+    am:  s.apple   || `https://music.apple.com/br/search?term=${enc(q)}`,
+    lyr: s.lyrics  || `https://www.letras.mus.br/?q=${enc(q)}`,
+    chd: s.chords  || `https://www.cifraclub.com.br/?q=${enc(q)}`,
+    les: s.lesson  || `https://www.youtube.com/results?search_query=${enc(q + " como tocar videoaula")}`,
+  };
+};
+
+const pill = (href, c, label) =>
+  `<a class="pill" style="--c:var(--${c})" href="${esc(href)}" target="_blank" rel="noopener"><i class="dot"></i>${label}</a>`;
+
+let cur = 0, tab = "yt", term = "";
+
+/* ---- lateral ---- */
+function renderSide(){
+  $("#band").textContent = BAND;
+  $("#count").textContent = `${SONGS.length} músicas`;
+  $("#playlists").innerHTML =
+    `<a href="${esc(PLAYLISTS.yt)}" target="_blank" rel="noopener">Playlist no YouTube <span>↗</span></a>` +
+    `<a href="${esc(PLAYLISTS.sp)}" target="_blank" rel="noopener">Playlist no Spotify <span>↗</span></a>` +
+    `<a href="${esc(PLAYLISTS.am)}" target="_blank" rel="noopener">Playlist no Apple Music <span>↗</span></a>`;
+  document.title = `Setlist — ${BAND}`;
+}
+
+/* ---- destaque ---- */
+function renderFeatured(){
+  const s = SONGS[cur], l = links(s);
+  const hasYT = !!s.youtubeId, hasSP = !!s.spotifyId;
+  if (tab === "yt" && !hasYT && hasSP) tab = "sp";
+  if (tab === "sp" && !hasSP && hasYT) tab = "yt";
+
+  let media;
+  if (!hasYT && !hasSP) {
+    media = `<div class="media"><div class="noembed">Player indisponível. Use os links ao lado.</div></div>`;
+  } else {
+    const tabs = `<div class="tabs">
+      ${hasYT ? `<button data-tab="yt" class="${tab === "yt" ? "on" : ""}">YouTube</button>` : ""}
+      ${hasSP ? `<button data-tab="sp" class="${tab === "sp" ? "on" : ""}">Spotify</button>` : ""}
+    </div>`;
+    const screen = tab === "yt"
+      ? `<div class="screen"><button class="thumb" data-play aria-label="Tocar vídeo" style="background-image:url(https://i.ytimg.com/vi/${esc(s.youtubeId)}/hqdefault.jpg)"><span class="pbtn">${ICON.play}</span></button></div>`
+      : `<div class="screen sp"><iframe src="https://open.spotify.com/embed/track/${esc(s.spotifyId)}" allow="encrypted-media" loading="lazy"></iframe></div>`;
+    media = `<div class="media">${tabs}${screen}</div>`;
+  }
+
+  $("#featured").innerHTML = `
+    <div class="eyebrow"><i></i>Selecionada <span>${cur + 1} de ${SONGS.length}</span></div>
+    <div class="feat-grid">
+      <div class="feat-text">
+        <h2>${esc(s.title)}</h2>
+        <p class="who">${esc(s.artist)}${s.key ? `<span class="tag">Tom ${esc(s.key)}</span>` : ""}${s.note ? ` · ${esc(s.note)}` : ""}</p>
+        <div class="pills">
+          ${pill(l.yt, "yt", "YouTube")}${pill(l.sp, "sp", "Spotify")}${pill(l.am, "am", "Apple Music")}
+        </div>
+        <div class="tlinks">
+          <a href="${esc(l.lyr)}" target="_blank" rel="noopener">Letra</a>
+          <a href="${esc(l.chd)}" target="_blank" rel="noopener">Cifra</a>
+          <a href="${esc(l.les)}" target="_blank" rel="noopener">Videoaula</a>
+        </div>
+      </div>
+      ${media}
+    </div>`;
+}
+
+function playYT(){
+  const s = SONGS[cur], scr = $("#featured .screen");
+  if (!s.youtubeId || !scr) return;
+  scr.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${esc(s.youtubeId)}?autoplay=1&rel=0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`;
+}
+
+/* ---- lista ---- */
+function renderList(){
+  const t = term.trim().toLowerCase();
+  const html = SONGS.map((s, i) => {
+    if (t && !`${s.title} ${s.artist}`.toLowerCase().includes(t)) return "";
+    const l = links(s);
+    return `<li class="row${i === cur ? " on" : ""}" data-i="${i}">
+      <div class="idx">${i === cur ? "♪" : i + 1}</div>
+      <div>
+        <div class="t">${esc(s.title)}</div>
+        <div class="a">${esc(s.artist)}${s.key ? `<span class="tag">Tom ${esc(s.key)}</span>` : ""}</div>
+      </div>
+      <div class="acts">
+        <a class="tl" href="${esc(l.lyr)}" target="_blank" rel="noopener">Letra</a>
+        <a class="tl" href="${esc(l.chd)}" target="_blank" rel="noopener">Cifra</a>
+        <a class="tl" href="${esc(l.les)}" target="_blank" rel="noopener">Aula</a>
+      </div>
+    </li>`;
+  }).join("");
+  $("#list").innerHTML = html || `<li class="empty">Nenhuma música encontrada.</li>`;
+}
+
+/* ---- barra ---- */
+function renderBar(){
+  const s = SONGS[cur];
+  $("#bar").innerHTML = `
+    <div class="mini"></div>
+    <div class="now"><b>${esc(s.title)}</b><span>${esc(s.artist)}</span></div>
+    <div class="ctrl">
+      <button data-prev aria-label="Anterior">${ICON.prev}</button>
+      <button class="go" data-go aria-label="Tocar">${ICON.play}</button>
+      <button data-next aria-label="Próxima">${ICON.next}</button>
+    </div>`;
+}
+
+/* ---- seleção ---- */
+function select(i, scroll){
+  cur = (i + SONGS.length) % SONGS.length;
+  renderList(); renderFeatured(); renderBar();
+  if (scroll) $("#featured").scrollIntoView({behavior: "smooth", block: "nearest"});
+}
+
+$("#list").addEventListener("click", e => {
+  if (e.target.closest("a")) return;
+  const r = e.target.closest(".row");
+  if (r) select(+r.dataset.i, true);
+});
+$("#featured").addEventListener("click", e => {
+  const tb = e.target.closest("[data-tab]");
+  if (tb) { tab = tb.dataset.tab; renderFeatured(); return; }
+  if (e.target.closest("[data-play]")) playYT();
+});
+$("#bar").addEventListener("click", e => {
+  if (e.target.closest("[data-prev]")) return select(cur - 1, true);
+  if (e.target.closest("[data-next]")) return select(cur + 1, true);
+  if (e.target.closest("[data-go]")) {
+    const s = SONGS[cur];
+    if (s.youtubeId) { tab = "yt"; renderFeatured(); playYT(); }
+    else if (s.spotifyId) { tab = "sp"; renderFeatured(); }
+    $("#featured").scrollIntoView({behavior: "smooth", block: "nearest"});
+  }
+});
+$("#q").addEventListener("input", e => { term = e.target.value; renderList(); });
+
+renderSide();
+select(0, false);
+</script>
+</body>
+</html>
